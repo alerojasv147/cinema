@@ -106,6 +106,16 @@ jobs:
           name: Run prettier check
           command: yarn prettier:check
 
+  unit-test:
+    executor: app-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - *restore-cache
+      - run:
+          name: Run unit test
+          command: yarn test
+
   terraform-validate:
     executor: terraform-executor
     steps:
@@ -293,6 +303,17 @@ workflows:
                 - staging
                 - main
 
+      - unit-test:
+          requires:
+            - linting
+            - prettier
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - main
+
       - terraform-validate:
           requires:
             - linting
@@ -316,8 +337,7 @@ workflows:
 
       - deploy-to-aws-s3:
           requires:
-            - linting
-            - prettier
+            - unit-test
             - terraform-plan-and-apply
           filters:
             branches:

@@ -15,7 +15,6 @@ const SearchResult = (props) => {
   const [movieData, setMovieData] = useState([]);
 
   useEffect(() => {
-    console.log('searchResult', searchResult);
     setMovieData(searchResult);
   }, [searchResult]);
 
