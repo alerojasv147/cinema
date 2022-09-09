@@ -29,7 +29,7 @@ const Details = (props) => {
   }, []);
 
   useEffect(() => {
-    pathURL(match.path, match.url);
+    pathURL(match?.path, match?.url);
     if (movie.length === 0) {
       movieDetails(id);
     }

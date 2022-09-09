@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -35,17 +35,20 @@ const App = (props) => {
         <Header />
       </ErrorBoundary>
       <div className="app">
-        <Switch>
-          {routesArray.map((data) => (
-            <Route
-              key={data.id}
-              exact
-              path={data.path}
-              component={data.component}
-              {...props}
-            />
-          ))}
-        </Switch>
+        <Routes>
+          {routesArray.map((data) => {
+            const Wrapper = data.component;
+            return (
+              <Route
+                key={data.id}
+                exact
+                path={data.path}
+                element={<Wrapper />}
+                {...props}
+              />
+            );
+          })}
+        </Routes>
       </div>
     </Router>
   );

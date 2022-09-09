@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 
 import './Header.scss';
 import logo from '../../assets/cinema-logo.svg';
@@ -67,12 +67,13 @@ const Header = (props) => {
   const [disableSearch, setDisableSearch] = useState(false);
   const [hideHeader, setHideHeader] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const detailsRoute = useRouteMatch('/:id/:name/details');
+  const detailsRoute = useMatch('/:id/:name/details');
 
   useEffect(() => {
     if (routesArray.length) {
+      console.log({ path, url });
       if (!path && !url) {
         pathURL('/', '/');
         const error = new Error(
@@ -123,7 +124,7 @@ const Header = (props) => {
     setDisableSearch(false);
     if (location.pathname !== '/') {
       clearMovieDetails();
-      history.push('/');
+      navigate('/');
       setType(type);
       setMovieType(type);
     } else {
@@ -141,7 +142,7 @@ const Header = (props) => {
   const navigateToMainPage = () => {
     setDisableSearch(false);
     clearMovieDetails();
-    history.push('/');
+    navigate('/');
   };
 
   const toggleMenu = () => {
