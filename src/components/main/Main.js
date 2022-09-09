@@ -37,7 +37,7 @@ const Main = (props) => {
   }, []);
 
   useEffect(() => {
-    pathURL(match.path, match.url);
+    pathURL(match?.path, match?.url);
     setResponsePageNumber(currentPage, totalPages);
     // eslint-disable-next-line
   }, [currentPage, totalPages]);
