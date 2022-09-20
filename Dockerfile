@@ -1,11 +1,14 @@
 # Pull from base image
-FROM node:18-alpine
+FROM node:16.17.0-alpine
 
 # Use app as the working directory
 WORKDIR /app
 
 # Copy the files from the current directory to app
 COPY . /app
+
+# Install python
+RUN apk --no-cache add --virtual .builds-deps build-base python3
 
 # Install dependencies
 RUN yarn install
